@@ -1,0 +1,52 @@
+/*
+===================================================================================================
+TABLE CREATION
+===================================================================================================
+--drop table PY_JOBS_AU_ANZ_DATA;
+
+--delete from PY_JOBS_AU_ANZ_DATA;
+
+CREATE
+	TABLE
+		PY_JOBS_AU_ANZ_DATA(
+			ID INTEGER PRIMARY KEY AUTOINCREMENT,
+			MSMT_DTE_ID INTEGER,
+			DATA_TYPE VARCHAR(30),
+			CNTRY_CDE VARCHAR(2),
+			SITE_CDE VARCHAR(30),
+			RPT_DTE_ID INTEGER,
+			RPT_DTE VARCHAR(10),
+			ORIGINAL_NBR INTEGER,
+			SEASONALLY_ADJUSTED_NBR INTEGER,
+			SEASONALLY_ADJUSTED_MTH_PCNT_CHNG DECIMAL(5,2),
+			SEASONALLY_ADJUSTED_YR_PCNT_CHNG DECIMAL(5,2),
+			TREND_NBR INTEGER,
+			TREND_MTH_PCNT_CHNG DECIMAL(5,2),
+			TREND_YR_PCNT_CHNG DECIMAL(5,2),
+			CAPTR_DTE_ID INTEGER,
+			STARTED_AT VARCHAR(20),
+			FINISHED_AT VARCHAR(20)
+		);
+
+===================================================================================================
+*/
+
+SELECT
+	MSMT_DTE_ID,
+	DATA_TYPE,
+	CNTRY_CDE,
+	SITE_CDE,
+	RPT_DTE_ID,
+	RPT_DTE,
+	ORIGINAL_NBR,
+	SEASONALLY_ADJUSTED_NBR,
+	SEASONALLY_ADJUSTED_MTH_PCNT_CHNG,
+	SEASONALLY_ADJUSTED_YR_PCNT_CHNG,
+	TREND_NBR,
+	TREND_MTH_PCNT_CHNG,
+	TREND_YR_PCNT_CHNG,
+	CAPTR_DTE_ID,
+	STARTED_AT,
+	FINISHED_AT
+FROM
+	PY_JOBS_AU_ANZ_DATA

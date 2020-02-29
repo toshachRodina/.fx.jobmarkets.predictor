@@ -1,0 +1,109 @@
+/*
+=======================================================================================================================================================================================================
+SUBJECT		 : uk govt announcement calendar - list of when key announcements are to occur
+OBJECT TYPE	 : table
+OBJECT NAME     : ltn.dbo.f_dtl_govt_key_date_anncmnt_uk_m
+CREATED BY	 : Harold Delaney
+CREATED ON	 : 20170104
+SOURCE		 : ons (office for national statistics) [ https://www.ons.gov.uk/releasecalendar?view=upcoming ]
+PREPERATION	 : SCRAPE    - webharvy scrapes summary data from site and stores in csv
+			   
+REMARKS		 : 1) data refreshed monthly to get upcoming months announcement dates
+			   2) 
+			   3)
+=======================================================================================================================================================================================================
+
+TABLE CREATION
+-----------------------------
+
+DROP TABLE ltn.dbo.stg_govt_key_date_anncmnt_ca_raw;
+
+CREATE TABLE ltn.dbo.stg_govt_key_date_anncmnt_ca_raw
+             (
+              msmt_dte_id nvarchar ( 8 ) not null
+		   ,key_date varchar(max) NOT NULL
+             );
+
+DROP TABLE ltn.dbo.f_dtl_govt_key_date_anncmnt_ca_m;
+
+CREATE TABLE ltn.dbo.f_dtl_govt_key_date_anncmnt_ca_m
+             (
+             msmt_dte_id       int NOT NULL
+           , cntry_cde         varchar(2) NOT NULL
+           , anncmnt_cde       varchar(30) NOT NULL
+           , anncmnt_desc      varchar(2000) NOT NULL
+           , last_updtd_dte_id int NOT NULL
+             );
+
+CREATE NONCLUSTERED INDEX ux_f_dtl_govt_key_date_anncmnt_ca_m ON ltn.dbo.f_dtl_govt_key_date_anncmnt_ca_m(msmt_dte_id, anncmnt_cde);
+
+ALTER TABLE ltn.dbo.f_dtl_govt_key_date_anncmnt_ca_m REBUILD
+WITH(DATA_COMPRESSION = ROW);
+
+=======================================================================================================================================================================================================
+exec create_f_dtl_govt_key_date_anncmnt_ca_m @p_env = 'DEV', @p_task_nme = '', @p_pkg_nme = ''
+
+select * from ltn.dbo.f_dtl_govt_key_date_anncmnt_ca_m order by 1
+
+select * from [dbo].[ctl_ssis_err_log] order by task_end_datetime desc
+=======================================================================================================================================================================================================
+*/
+
+USE [ltn];
+GO
+
+IF OBJECT_ID('create_f_dtl_govt_key_date_anncmnt_ca_m') IS NULL -- Check if SP Exists
+    EXEC ('CREATE PROCEDURE create_f_dtl_govt_key_date_anncmnt_ca_m AS SET NOCOUNT ON;'); -- Create dummy/empty SP
+GO
+
+ALTER PROCEDURE create_f_dtl_govt_key_date_anncmnt_ca_m -- Alter the SP Always
+(
+      @p_env      nvarchar(10)
+    , @p_task_nme nvarchar(100)
+    , @p_pkg_nme  nvarchar(100))
+AS
+     BEGIN
+         SET LANGUAGE 'british english'; -- sets the date viewer to show dates as YYYY-MM-DD
+
+         SET ANSI_NULLS ON;
+         SET QUOTED_IDENTIFIER ON;
+
+/*=====================================================================================================================================================================================================
+DECLARATIONS & INITIALISATIONS
+
+=====================================================================================================================================================================================================*/
+
+         -- TABLES ----------------------------------------------------------------
+         DECLARE
+                @l_tbl_nme AS nvarchar(50);
+         DECLARE
+                @l_prces_dte_id AS nvarchar(8);
+
+         SET @l_tbl_nme = 'f_dtl_govt_key_date_anncmnt_ca_m';
+         SET @l_prces_dte_id = CONVERT(varchar(10), CAST(CAST(GETDATE() AS date) AS date), 112);
+
+         -- DATES -----------------------------------------------------------------
+         DECLARE
+                @l_msmt_dte_id AS nvarchar(8);
+
+         SET @l_msmt_dte_id =
+             (
+                 SELECT MAX(msmt_dte_id)
+                        FROM
+                             ltn.dbo.stg_govt_key_date_anncmnt_ca_raw
+             );
+
+/*=====================================================================================================================================================================================================
+MAIN CODE BLOCK
+- TABLE TIDY UP (IF NEEDED)
+- INSERT NEW DATA
+- SWITCH INTO EMPTY PARTITIONS (IF USING TABLE PARTITIONS
+
+=====================================================================================================================================================================================================*/
+
+/*=====================================================================================================================================================================================================
+TRY BLOACK - START
+
+=====================================================================================================================================================================================================*/
+
+    BEGIN TRY

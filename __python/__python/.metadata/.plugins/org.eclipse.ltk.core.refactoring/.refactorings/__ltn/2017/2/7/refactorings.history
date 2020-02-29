@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;__ltn/BS_JOBS_NZ_JOBSERVE.py&apos; to &apos;__DONT_USE_BS_JOBS_NZ_JOBSERVE.py&apos;" description="Rename resource &apos;BS_JOBS_NZ_JOBSERVE.py&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="BS_JOBS_NZ_JOBSERVE.py" name="__DONT_USE_BS_JOBS_NZ_JOBSERVE.py" stamp="1486929495609" updateReferences="true"/>
+</session>

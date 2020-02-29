@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete 4 resources" deleteContents="false" description="Delete 4 resources" element1="/__ltn/CLASS_CONFIG.py" element2="/__ltn/CLASS_DB.py" element3="/__ltn/CONFIG.py" element4="/__ltn/db.conf" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="4" stamp="1485809172798"/>
+</session>
