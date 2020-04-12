@@ -16,18 +16,28 @@ rem ============================================================================
 @echo off
 
 set pythonPath=%USERPROFILE%\Anaconda3\envs\lanoitan\python.exe
-set scritpPath1=D:\Sync\__lanoitan\__scripts\__python\jobs\
-set scritpPath2=D:\Sync\__lanoitan\__scripts\__python\b4s\
-set scritpPath3=D:\Sync\__lanoitan\__scripts\__python\markets\
-set scritpPath4=D:\Sync\__lanoitan\__scripts\__python\twitter\
+set scriptPath=D:\Sync\__rodinaFre\.fx.jobmarkets.predictor\__python\
+
+set scriptPath1=%scriptPath%jobs\
+set scriptPath2=%scriptPath%b4s\
+set scriptPath3=%scriptPath%markets\
+set scriptPath4=%scriptPath%twitter\
+
+rem set scritpPath1=D:\Sync\__lanoitan\__scripts\__python\jobs\
+rem set scritpPath2=D:\Sync\__lanoitan\__scripts\__python\b4s\
+rem set scritpPath3=D:\Sync\__lanoitan\__scripts\__python\markets\
+rem set scritpPath4=D:\Sync\__lanoitan\__scripts\__python\twitter\
 
 rem ===========================================================================================================================================================
 rem JOBS - NZ
 rem ===========================================================================================================================================================
 
-rem %pythonPath% %scritpPath1%PY_BATCH_JOBS_NZ.py %*
+ECHO %pythonPath% %scritpPath1%%PY_BATCH_JOBS_NZ.py %*
+%pythonPath% %scritpPath1%%PY_BATCH_JOBS_NZ.py %*
 
-rem TIMEOUT 30
+
+
+TIMEOUT 30
 
 
 rem ===========================================================================================================================================================
@@ -51,7 +61,7 @@ rem ============================================================================
 rem MARKETS DATA
 rem ===========================================================================================================================================================
 
-%pythonPath% %scritpPath3%PY_BATCH_MARKETS.py %*
+rem %pythonPath% %scritpPath3%PY_BATCH_MARKETS.py %*
 
 TIMEOUT 30
 
@@ -62,5 +72,5 @@ rem ============================================================================
 rem %pythonPath% %scritpPath4%PY_BATCH_TWITTER.py %*
 
 
-rem pause
-exit
+pause
+rem exit

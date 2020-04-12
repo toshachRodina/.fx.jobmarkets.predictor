@@ -23,3 +23,7 @@ chdir /D %TEMP%
 
 for /d %%D in (*) do rd /s /q "%%D"
 del /f /q *
+
+timeout 10
+
+exit

@@ -44,7 +44,7 @@ __author__ = "Harold Delaney"
 
 g = dict(
     CONFIG_FILE = utilPath + '\PY_DB.conf',
-    VARS_TABLE_NAME = 'PY_VARS_CTL',
+    #VARS_TABLE_NAME = 'PY_VARS_CTL',
     PKG_NME = fileName.replace('.py','').upper()
 )
 
@@ -61,6 +61,8 @@ def init():
     # CHANGE - 20171128 ==================================================================================
     g['DB'] = g['CONFIG']['DB_DIR'] + g['CONFIG']['DB']    #dbPath + '\\' + g['CONFIG']['DB']
     g['DRVR_PATH'] = g['CONFIG']['DRVR_DIR']    #drvrPath
+    # CHANGE - 20200412 ==================================================================================
+    g['CTL_TBL'] = g['CONFIG']['CTL_TBL']
     # CHANGE =============================================================================================
     g['MSMT_DTE_ID'] = time.strftime('%Y%m%d') 
     g['STARTED_AT'] = time.strftime("%Y-%m-%d %H:%M:%S")    
@@ -110,31 +112,36 @@ def scrape():
     # - only other sections that "may" change are DELETE and UPDATE DB statements
     # ==========================================================================================================================================================
     # PASS 1 - INDUSTRY & REGION COUNT ============================================================
-    for links in soup.find_all('a'):
-        full_ref = str(links)
-        full_ref = full_ref.upper()
-        
-        if any(item in full_ref for item in g['ITEM_CHECK']):            
-            if '-BY-CATEGORY' in full_ref:
+    for div in soup.find_all('div', id='ajaxRefineSearch'):
+        for ref in div.find_all('div', class_='refineItem'):
+
+            refText = str(ref).upper()
+            # FACET TYPE
+            if 'LOCATION_STATE' in refText:
+                facet_type = 'REGION'
+            elif 'EMPLOYMENTTYPE' in refText:
+                facet_type = 'JOB TYPE'
+            elif 'COMPANYNAME' in refText:
+                facet_type = 'COMPANY NAME'
+            elif 'JOBCATEGORY' in refText:
                 facet_type = 'INDUSTRY'
-                link_txt = str(links.get('href'))
-                link_txt = link_txt.rsplit('/', 1)[0]
-            elif '-BY-CITY' in full_ref:
+            elif 'LOCATION_COUNTRY' in refText:
                 facet_type = 'LOCATION'
-                link_txt = str(links.get('href'))
-            else:
-                None
-            
-            link_txt = link_txt[link_txt.rindex('/')+1:]
-            #%2C = , ; %20 = <space> ; %26 = &
-            link_txt = link_txt.replace('%2C',',').replace('%20',' ').replace('%26','&').replace(r"'",'')
-            link_txt = link_txt.upper()
-            facet_desc = link_txt.strip()
+            elif 'SALARYTYPE' in refText:
+                facet_type = 'SALARY ESTIMATE'
+
+            # FACET DESCRIPTION
+            for links in ref.find_all('a'):
+                linkText = links.string.upper()
+                facet_desc = linkText
+
             try: # IGNORES ENTRIES THAT HAVE NO nbr VAL
-                nbr = re.search(r'>(.*?)</SPAN>',full_ref).group(1)
+                # NUMBER VALUE
+                nbr = re.search(r'\((\d+(?:\.\d+)?)\)',refText).group(1)
                 nbr = str(nbr).replace(',', '')
-                nbr = re.findall('\d+', nbr)
-                facet_count = nbr[0]
+                facet_count = nbr
+                #facet_count = re.findall('\d+', nbr)
+                
                 # =============================================================================
                 # WRITE RESULTS OF SOUP ANALYISIS/SCRAPE TO LOCAL DB
                 # =============================================================================   

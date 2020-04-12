@@ -28,7 +28,7 @@ SELECT
 	END_DATETIME,
 	STATUS_DESC
 FROM
-	PY_PROCESS_LOG
+	LOG_PY_PROCESS
 WHERE
 	1 = 1
 ORDER BY
@@ -56,7 +56,7 @@ SELECT msmt_dte_id
      , cntry_cde
      , count(*) AS row_count
      , sum(cast(facet_cnt AS integer)) AS job_count
-  FROM py_jobads_jobs_data
+  FROM WEBDATA_JOBADS
  WHERE 1 = 1
        AND msmt_dte_id >= strftime ( '%Y%m%d', date ( 'now', 'localtime', '-2 day' ) )
  GROUP BY msmt_dte_id
@@ -70,11 +70,14 @@ SELECT msmt_dte_id
                WHEN 'US' THEN 5
           END
         , 1 DESC;
-			
+		
+    
+SELECT DISTINCT facet_type FROM WEBDATA_JOBADS    
+    
+SELECT * FROM WEBDATA_JOBADS  
+    
 commit;
 
-
-	
 -- DETAIL QUERY -----------------------------------------------------------------------------------
 SELECT
 	MAX( MSMT_DTE_ID ) AS msmt_dte_id,
@@ -135,10 +138,10 @@ FROM
 				END AS INTEGER
 			) AS PREV_FACET_CNT
 		FROM
-			PY_JOBADS_JOBS_DATA
+			WEBDATA_JOBADS
 		WHERE
 			1 = 1
-			AND cntry_cde = 'UK'
+			AND cntry_cde = 'NZ'
 			AND MSMT_DTE_ID >= strftime(
 				'%Y%m%d',
 				DATE(
@@ -162,7 +165,7 @@ ORDER BY
 	
 
 
-SELECT * FROM PY_JOBADS_JOBS_DATA WHERE SITE_CDE = 'JORAX2' AND CNTRY_CDE = 'UK' AND MSMT_DTE_ID = 20191002 ;
+SELECT * FROM WEBDATA_JOBADS WHERE SITE_CDE = 'MYJOBSPACE' AND CNTRY_CDE = 'NZ' AND MSMT_DTE_ID = 20191002 ;
 
 /*
 ===================================================================================================

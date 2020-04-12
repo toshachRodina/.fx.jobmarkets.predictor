@@ -2,13 +2,13 @@
 ===================================================================================================
 TABLE CREATION
 ===================================================================================================
---drop table PY_JOBS_DATA;
+--drop table WEBDATA_JOBADS;
 
---delete from PY_JOBS_DATA;
+--delete from WEBDATA_JOBADS;
 
 CREATE
 	TABLE
-		PY_JOBADS_JOBS_DATA(
+		WEBDATA_JOBADS(
 			ID INTEGER PRIMARY KEY AUTOINCREMENT,
 			MSMT_DTE_ID INTEGER,
 			DATA_TYPE VARCHAR(4),

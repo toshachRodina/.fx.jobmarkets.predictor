@@ -2,13 +2,13 @@
 ===================================================================================================
 TABLE CREATION
 ===================================================================================================
---drop table PY_B4S_DATA;
+--drop table WEBDATA_B4SADS;
 
---delete from PY_B4S_DATA;
+--delete from WEBDATA_B4SADS;
 
 CREATE
 	TABLE
-		PY_JOBADS_B4S_DATA(
+		WEBDATA_B4SADS(
 			ID INTEGER PRIMARY KEY AUTOINCREMENT,
 			MSMT_DTE_ID INTEGER,
 			DATA_TYPE VARCHAR(3),

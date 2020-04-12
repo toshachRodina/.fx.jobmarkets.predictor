@@ -113,7 +113,7 @@ class pyDB(object):
                         WHEN 2 THEN 'ENV'
                     END
                     AND VARS.VAR_NME = DAT.VAR_NME'''.format(
-            g['VARS_TABLE_NAME'], #[0]
+            g['CTL_TBL'], # g['VARS_TABLE_NAME'], #[0]
             g['PKG_NME'], #[1]
             g['ENV'] #[2]
             )
@@ -138,7 +138,7 @@ class pyDB(object):
         # =============================================================================
         # DELETE PROCESS LOG ENTRIES OLDER THAN 2 DAYS
         # =============================================================================
-        q = '''DELETE FROM PY_PROCESS_LOG WHERE 1 = 1 AND MSMT_DTE_ID <= strftime('%Y%m%d',date('now','localtime','-2 day'))'''
+        q = '''DELETE FROM LOG_PY_PROCESS WHERE 1 = 1 AND MSMT_DTE_ID <= strftime('%Y%m%d',date('now','localtime','-2 day'))'''
         q = re.sub(r"([\n ])\1*", r"\1",q).replace('\n',' ')
         self.cur.execute(q)
         self.conn.commit()
@@ -156,7 +156,7 @@ class pyDB(object):
         # UPDATE LOCAL DB WITH ERROR CAPTURE FINISH TIME
         # =============================================================================
         q = r"""INSERT INTO {0} (MSMT_DTE_ID, PKG_NME, START_DATETIME, END_DATETIME, STATUS, STATUS_DESC, VARS) VALUES ({1}, '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')""".format(
-            'PY_PROCESS_LOG', #[0]
+            'LOG_PY_PROCESS', #[0]
             g['MSMT_DTE_ID'], #[1]
             g['PKG_NME'], #[2]
             g['STARTED_AT'], #[3]

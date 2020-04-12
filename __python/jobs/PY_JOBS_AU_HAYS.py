@@ -44,7 +44,7 @@ __author__ = "Harold Delaney"
 
 g = dict(
     CONFIG_FILE = utilPath + '\PY_DB.conf',
-    VARS_TABLE_NAME = 'PY_VARS_CTL',
+    VARS_TABLE_NAME = 'CTL_PY_VARS',
     PKG_NME = fileName.replace('.py','').upper()
 )
 
