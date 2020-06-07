@@ -34,7 +34,7 @@ WHERE
 ORDER BY
 	END_DATETIME DESC;
 
-	
+
 /*
 ===================================================================================================
 DATABASE MANAGEMENT
@@ -141,7 +141,7 @@ FROM
 			WEBDATA_JOBADS
 		WHERE
 			1 = 1
-			AND cntry_cde = 'NZ'
+			AND cntry_cde = 'US'
 			AND MSMT_DTE_ID >= strftime(
 				'%Y%m%d',
 				DATE(
@@ -165,7 +165,7 @@ ORDER BY
 	
 
 
-SELECT * FROM WEBDATA_JOBADS WHERE SITE_CDE = 'MYJOBSPACE' AND CNTRY_CDE = 'NZ' AND MSMT_DTE_ID = 20191002 ;
+SELECT * FROM WEBDATA_JOBADS WHERE SITE_CDE = 'JOBSITE' AND CNTRY_CDE = 'UK' AND MSMT_DTE_ID = 20200519 ;
 
 /*
 ===================================================================================================

@@ -15,12 +15,14 @@
 # =============================================================================
 # ENVIRNMENT AND LIBRARY SETUP -- START
 # =============================================================================
-import os, ssl
+import os
+import ssl
 import sys
 import time # date time operations
 import datetime # date subtractions
 import re # regex
 import random 
+import requests
 from bs4 import BeautifulSoup
 
 if (not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None)): 
@@ -48,7 +50,7 @@ __author__ = "Harold Delaney"
 
 g = dict(
     CONFIG_FILE = utilPath + '\PY_DB.conf',
-    VARS_TABLE_NAME = 'PY_VARS_CTL',
+    #VARS_TABLE_NAME = 'PY_VARS_CTL',
     PKG_NME = fileName.replace('.py','').upper()
 )
 
@@ -65,6 +67,8 @@ def init():
     # CHANGE - 20171128 ==================================================================================
     g['DB'] = g['CONFIG']['DB_DIR'] + g['CONFIG']['DB']    #dbPath + '\\' + g['CONFIG']['DB']
     g['DRVR_PATH'] = g['CONFIG']['DRVR_DIR']    #drvrPath
+    # CHANGE - 20200412 ==================================================================================
+    g['CTL_TBL'] = g['CONFIG']['CTL_TBL']
     # CHANGE =============================================================================================
     g['MSMT_DTE_ID'] = time.strftime('%Y%m%d') 
     g['STARTED_AT'] = time.strftime("%Y-%m-%d %H:%M:%S")

@@ -332,11 +332,13 @@ JOBS AU
 -- PROD
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_BATCH_JOBS_AU','PKG','ACTIVE_IND','Y','used to bypass from a variables perspective (rather than turning off in BATCH script)');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_BATCH_JOBS_AU','PKG','PKGS_TO_RUN','PY_JOBS_AU_ADZUNA,PY_JOBS_AU_CAREERJET,PY_JOBS_AU_GUMTREE,PY_JOBS_AU_HAYS,PY_JOBS_AU_INDEED,PY_JOBS_AU_JOBSEARCH,PY_JOBS_AU_JOBSERVE,PY_JOBS_AU_JORA,PY_JOBS_AU_JORAX2,PY_JOBS_AU_SEEK','list of packages to be run within the current folder (comma(,) delimeted)');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_BATCH_JOBS_AU','PKG','TBL_NME','WEBDATA_JOBADS','table name for the scrape results to be posted to');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_BATCH_JOBS_AU','PKG','SMRY_DESC','(NA)','batch controller - this package is used to fire packages located in same folder and listed in the PKG_TO_RUN variable');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_BATCH_JOBS_AU','PKG','EMAIL_DSTRBTN_LST','toshach@gmail.com','email distribution list for email notifications');
 -- DEV
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_BATCH_JOBS_AU','PKG','ACTIVE_IND','Y','used to bypass from a variables perspective (rather than turning off in BATCH script)');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_BATCH_JOBS_AU','PKG','PKGS_TO_RUN','PY_JOBS_AU_ADZUNA,PY_JOBS_AU_CAREERJET,PY_JOBS_AU_GUMTREE,PY_JOBS_AU_HAYS,PY_JOBS_AU_INDEED,PY_JOBS_AU_JOBSEARCH,PY_JOBS_AU_JOBSERVE,PY_JOBS_AU_JORA,PY_JOBS_AU_JORAX2,PY_JOBS_AU_SEEK','list of packages to be run within the current folder (comma(,) delimeted)');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_BATCH_JOBS_AU','PKG','TBL_NME','WEBDATA_JOBADS','table name for the scrape results to be posted to');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_BATCH_JOBS_AU','PKG','SMRY_DESC','(NA)','batch controller - this package is used to fire packages located in same folder and listed in the PKG_TO_RUN variable');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_BATCH_JOBS_AU','PKG','EMAIL_DSTRBTN_LST','toshach@gmail.com','email distribution list for email notifications');
 -- PY_JOBS_AU_ADZUNA
@@ -349,7 +351,7 @@ insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) va
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_AU_ADZUNA','PKG','DATA_TYPE','JOBS','data type entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_AU_ADZUNA','PKG','CNTRY_CDE','AU','country code entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_AU_ADZUNA','PKG','SITE_CDE','ADZUNA','site code entry for results');
-insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_AU_ADZUNA','PKG','USES_WEB_DRVR','N','indicates whether web driver (selenium) is used or html can be parsed directly');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_AU_ADZUNA','PKG','USES_WEB_DRVR','Y','indicates whether web driver (selenium) is used or html can be parsed directly');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_AU_ADZUNA','PKG','REGIONS','VICTORIA,NEW SOUTH WALES,QUEENSLAND,NORTHERN TERRITORY,SOUTH AUSTRALIA,WESTERN AUSTRALIA,AUSTRALIAN CAPITAL TERRITORY,TASMANIA','regions used in site search');
 -- DEV
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_AU_ADZUNA','PKG','ACTIVE_IND','Y','used to bypass from a variables perspective (rather than turning off in BATCH script)');
@@ -360,7 +362,7 @@ insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) va
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_AU_ADZUNA','PKG','DATA_TYPE','JOBS','data type entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_AU_ADZUNA','PKG','CNTRY_CDE','AU','country code entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_AU_ADZUNA','PKG','SITE_CDE','ADZUNA','site code entry for results');
-insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_AU_ADZUNA','PKG','USES_WEB_DRVR','N','indicates whether web driver (selenium) is used or html can be parsed directly');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_AU_ADZUNA','PKG','USES_WEB_DRVR','Y','indicates whether web driver (selenium) is used or html can be parsed directly');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_AU_ADZUNA','PKG','REGIONS','VICTORIA,NEW SOUTH WALES,QUEENSLAND,NORTHERN TERRITORY,SOUTH AUSTRALIA,WESTERN AUSTRALIA,AUSTRALIAN CAPITAL TERRITORY,TASMANIA','regions used in site search');
 -- PY_JOBS_AU_CAREERJET
 -- PROD
@@ -663,7 +665,7 @@ insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) va
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_CA_JOBSERVE','PKG','DATA_TYPE','JOBS','data type entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_CA_JOBSERVE','PKG','CNTRY_CDE','CA','country code entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_CA_JOBSERVE','PKG','SITE_CDE','JOBSERVE','site code entry for results');
-insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_CA_JOBSERVE','PKG','USES_WEB_DRVR','N','indicates whether web driver (selenium) is used or html can be parsed directly');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_CA_JOBSERVE','PKG','USES_WEB_DRVR','Y','indicates whether web driver (selenium) is used or html can be parsed directly');
 -- DEV
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_CA_JOBSERVE','PKG','ACTIVE_IND','Y','used to bypass from a variables perspective (rather than turning off in BATCH script)');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_CA_JOBSERVE','PKG','SMRY_DESC','(NA)','scrapes job listings from the JOBSERVE website');
@@ -673,7 +675,7 @@ insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) va
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_CA_JOBSERVE','PKG','DATA_TYPE','JOBS','data type entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_CA_JOBSERVE','PKG','CNTRY_CDE','CA','country code entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_CA_JOBSERVE','PKG','SITE_CDE','JOBSERVE','site code entry for results');
-insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_CA_JOBSERVE','PKG','USES_WEB_DRVR','N','indicates whether web driver (selenium) is used or html can be parsed directly');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_CA_JOBSERVE','PKG','USES_WEB_DRVR','Y','indicates whether web driver (selenium) is used or html can be parsed directly');
 -- PY_JOBS_CA_WORKOPOLIS
 -- PROD
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_CA_WORKOPOLIS','PKG','ACTIVE_IND','Y','used to bypass from a variables perspective (rather than turning off in BATCH script)');
@@ -683,7 +685,7 @@ insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) va
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_CA_WORKOPOLIS','PKG','DATA_TYPE','JOBS','data type entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_CA_WORKOPOLIS','PKG','CNTRY_CDE','CA','country code entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_CA_WORKOPOLIS','PKG','SITE_CDE','WORKOPOLIS','site code entry for results');
-insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_CA_WORKOPOLIS','PKG','USES_WEB_DRVR','N','indicates whether web driver (selenium) is used or html can be parsed directly');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_CA_WORKOPOLIS','PKG','USES_WEB_DRVR','Y','indicates whether web driver (selenium) is used or html can be parsed directly');
 -- DEV
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_CA_WORKOPOLIS','PKG','ACTIVE_IND','Y','used to bypass from a variables perspective (rather than turning off in BATCH script)');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_CA_WORKOPOLIS','PKG','SMRY_DESC','(NA)','scrapes job listings from the WORKOPOLIS website');
@@ -692,7 +694,7 @@ insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) va
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_CA_WORKOPOLIS','PKG','DATA_TYPE','JOBS','data type entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_CA_WORKOPOLIS','PKG','CNTRY_CDE','CA','country code entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_CA_WORKOPOLIS','PKG','SITE_CDE','WORKOPOLIS','site code entry for results');
-insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_CA_WORKOPOLIS','PKG','USES_WEB_DRVR','N','indicates whether web driver (selenium) is used or html can be parsed directly');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_CA_WORKOPOLIS','PKG','USES_WEB_DRVR','Y','indicates whether web driver (selenium) is used or html can be parsed directly');
 /* 
 ==============================================================================================================================
 JOBS NZ
@@ -940,7 +942,7 @@ insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) va
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_JOBSITE','PKG','ACTIVE_IND','Y','used to bypass from a variables perspective (rather than turning off in BATCH script)');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_JOBSITE','PKG','SMRY_DESC','(NA)','scrapes job listings from the JOBSITE website');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_JOBSITE','PKG','URL_OLD','http://www.jobsite.co.uk/jobs','source url to scrape');
-insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_JOBSITE','PKG','URL','http://www.jobsite.co.uk/advancedsearch?refine=Y&search_referer=external-other&engine=stepmatch','source url to scrape');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_JOBSITE','PKG','URL','https://www.jobsite.co.uk/','source url to scrape');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_JOBSITE','PKG','URL_SEARCH','http://www.jobsite.co.uk/vacancies?sector=','source url to scrape');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_JOBSITE','PKG','TBL_NME','WEBDATA_JOBADS','table name for the scrape results to be posted to');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_JOBSITE','PKG','DATA_TYPE','JOBS','data type entry for results');
@@ -952,7 +954,7 @@ insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) va
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_JOBSITE','PKG','ACTIVE_IND','Y','used to bypass from a variables perspective (rather than turning off in BATCH script)');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_JOBSITE','PKG','SMRY_DESC','(NA)','scrapes job listings from the JOBSITE website');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_JOBSITE','PKG','URL_OLD','http://www.jobsite.co.uk/jobs','source url to scrape');
-insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_JOBSITE','PKG','URL','http://www.jobsite.co.uk/advancedsearch?refine=Y&search_referer=external-other&engine=stepmatch','source url to scrape');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_JOBSITE','PKG','URL','https://www.jobsite.co.uk/','source url to scrape');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_JOBSITE','PKG','URL_SEARCH','http://www.jobsite.co.uk/vacancies?sector=','source url to scrape');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_JOBSITE','PKG','TBL_NME','WEBDATA_JOBADS','table name for the scrape results to be posted to');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_JOBSITE','PKG','DATA_TYPE','JOBS','data type entry for results');
@@ -1014,7 +1016,7 @@ insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) va
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_REED','PKG','DATA_TYPE','JOBS','data type entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_REED','PKG','CNTRY_CDE','UK','country code entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_REED','PKG','SITE_CDE','REED','site code entry for results');
-insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_REED','PKG','USES_WEB_DRVR','N','indicates whether web driver (selenium) is used or html can be parsed directly');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_REED','PKG','USES_WEB_DRVR','Y','indicates whether web driver (selenium) is used or html can be parsed directly');
 -- DEV
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_REED','PKG','ACTIVE_IND','Y','used to bypass from a variables perspective (rather than turning off in BATCH script)');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_REED','PKG','SMRY_DESC','(NA)','scrapes job listings from the REED website');
@@ -1024,7 +1026,7 @@ insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) va
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_REED','PKG','DATA_TYPE','JOBS','data type entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_REED','PKG','CNTRY_CDE','UK','country code entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_REED','PKG','SITE_CDE','REED','site code entry for results');
-insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_REED','PKG','USES_WEB_DRVR','N','indicates whether web driver (selenium) is used or html can be parsed directly');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_REED','PKG','USES_WEB_DRVR','Y','indicates whether web driver (selenium) is used or html can be parsed directly');
 -- PY_JOBS_UK_TOTALJOBS
 -- PROD
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_TOTALJOBS','PKG','ACTIVE_IND','Y','used to bypass from a variables perspective (rather than turning off in BATCH script)');
@@ -1034,7 +1036,7 @@ insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) va
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_TOTALJOBS','PKG','DATA_TYPE','JOBS','data type entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_TOTALJOBS','PKG','CNTRY_CDE','UK','country code entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_TOTALJOBS','PKG','SITE_CDE','TOTALJOBS','site code entry for results');
-insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_TOTALJOBS','PKG','USES_WEB_DRVR','N','indicates whether web driver (selenium) is used or html can be parsed directly');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_TOTALJOBS','PKG','USES_WEB_DRVR','Y','indicates whether web driver (selenium) is used or html can be parsed directly');
 -- DEV
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_TOTALJOBS','PKG','ACTIVE_IND','Y','used to bypass from a variables perspective (rather than turning off in BATCH script)');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_TOTALJOBS','PKG','SMRY_DESC','(NA)','scrapes job listings from the TOTALJOBS website');
@@ -1043,30 +1045,30 @@ insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) va
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_TOTALJOBS','PKG','DATA_TYPE','JOBS','data type entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_TOTALJOBS','PKG','CNTRY_CDE','UK','country code entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_TOTALJOBS','PKG','SITE_CDE','TOTALJOBS','site code entry for results');
-insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_TOTALJOBS','PKG','USES_WEB_DRVR','N','indicates whether web driver (selenium) is used or html can be parsed directly');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_TOTALJOBS','PKG','USES_WEB_DRVR','Y','indicates whether web driver (selenium) is used or html can be parsed directly');
 -- PY_JOBS_UK_UNIVERSAL
 -- PROD
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_UNIVERSAL','PKG','ACTIVE_IND','Y','used to bypass from a variables perspective (rather than turning off in BATCH script)');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_UNIVERSAL','PKG','SMRY_DESC','(NA)','scrapes job listings from the UNIVERSAL website');
-insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_UNIVERSAL','PKG','URL','https://jobsearch.direct.gov.uk/jobsearch/Browse.aspx?sc=','source url to scrape');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_UNIVERSAL','PKG','URL','https://findajob.dwp.gov.uk/search','source url to scrape');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_UNIVERSAL','PKG','URL_PART1','in','additional url parts - typical used for search paramaters');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_UNIVERSAL','PKG','URL_PART2','rg','additional url parts - typical used for search paramaters');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_UNIVERSAL','PKG','TBL_NME','WEBDATA_JOBADS','table name for the scrape results to be posted to');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_UNIVERSAL','PKG','DATA_TYPE','JOBS','data type entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_UNIVERSAL','PKG','CNTRY_CDE','UK','country code entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_UNIVERSAL','PKG','SITE_CDE','UNIVERSAL','site code entry for results');
-insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_UNIVERSAL','PKG','USES_WEB_DRVR','N','indicates whether web driver (selenium) is used or html can be parsed directly');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('PROD','PY_JOBS_UK_UNIVERSAL','PKG','USES_WEB_DRVR','Y','indicates whether web driver (selenium) is used or html can be parsed directly');
 -- DEV
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_UNIVERSAL','PKG','ACTIVE_IND','Y','used to bypass from a variables perspective (rather than turning off in BATCH script)');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_UNIVERSAL','PKG','SMRY_DESC','(NA)','scrapes job listings from the UNIVERSAL website');
-insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_UNIVERSAL','PKG','URL','https://jobsearch.direct.gov.uk/jobsearch/Browse.aspx?sc=','source url to scrape');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_UNIVERSAL','PKG','URL','https://findajob.dwp.gov.uk/search','source url to scrape');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_UNIVERSAL','PKG','URL_PART1','in','additional url parts - typical used for search paramaters');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_UNIVERSAL','PKG','URL_PART2','rg','additional url parts - typical used for search paramaters');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_UNIVERSAL','PKG','TBL_NME','WEBDATA_JOBADS','table name for the scrape results to be posted to');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_UNIVERSAL','PKG','DATA_TYPE','JOBS','data type entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_UNIVERSAL','PKG','CNTRY_CDE','UK','country code entry for results');
 insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_UNIVERSAL','PKG','SITE_CDE','UNIVERSAL','site code entry for results');
-insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_UNIVERSAL','PKG','USES_WEB_DRVR','N','indicates whether web driver (selenium) is used or html can be parsed directly');
+insert into CTL_PY_VARS (ENV, PKG_NME, VAR_TYPE, VAR_NME, VAR_VAL, VAR_CMNTS) values ('DEV','PY_JOBS_UK_UNIVERSAL','PKG','USES_WEB_DRVR','Y','indicates whether web driver (selenium) is used or html can be parsed directly');
 /* 
 ==============================================================================================================================
 JOBS US

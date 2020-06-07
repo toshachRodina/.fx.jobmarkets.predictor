@@ -119,7 +119,7 @@ def email_status(step):
         # =============================================================================   
         dbmgr = pyDB(g['DB'])
         q = r"""SELECT msmt_dte_id, cntry_cde, count( * ) AS row_cnt, sum(facet_cnt) as job_count FROM {0} WHERE cntry_cde = 'NZ' GROUP BY msmt_dte_id, cntry_cde ORDER BY msmt_dte_id DESC LIMIT 5""".format(
-            'PY_JOBADS_JOBS_DATA'
+            'WEBDATA_JOBADS'
             ) 
         rslt = dbmgr.query(q)
         # =============================================================================
@@ -186,7 +186,7 @@ def email_status(step):
                                 else 0
                             end as INTEGER) as PREV_FACET_CNT
                         from
-                            PY_JOBADS_JOBS_DATA
+                            WEBDATA_JOBADS
                         where
                             1 = 1
                             and cntry_cde = 'NZ'
@@ -209,7 +209,7 @@ def email_status(step):
                 order by
                     1,
                     3""".format(
-            'PY_JOBS_DATA'
+            'WEBDATA_JOBADS'
             ) 
         rslt = dbmgr.query(q)
         # =============================================================================

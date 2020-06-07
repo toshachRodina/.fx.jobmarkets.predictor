@@ -22,14 +22,8 @@ rem ============================================================================
 rem JOBS - NZ
 rem ===========================================================================================================================================================
 
-@echo on
-rem echo %pythonPath% 
-echo %pythonPath% %scriptPath%PY_BATCH_JOBS_NZ.py
-@echo off
-
 %pythonPath% %scriptPath%PY_BATCH_JOBS_NZ.py %*
 
 TIMEOUT 10
 
-pause
-rem exit
+exit

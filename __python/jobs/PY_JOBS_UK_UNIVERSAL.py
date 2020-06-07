@@ -44,7 +44,7 @@ __author__ = "Harold Delaney"
 
 g = dict(
     CONFIG_FILE = utilPath + '\PY_DB.conf',
-    VARS_TABLE_NAME = 'PY_VARS_CTL',
+    #VARS_TABLE_NAME = 'PY_VARS_CTL',
     PKG_NME = fileName.replace('.py','').upper()
 )
 
@@ -61,6 +61,8 @@ def init():
     # CHANGE - 20171128 ==================================================================================
     g['DB'] = g['CONFIG']['DB_DIR'] + g['CONFIG']['DB']    #dbPath + '\\' + g['CONFIG']['DB']
     g['DRVR_PATH'] = g['CONFIG']['DRVR_DIR']    #drvrPath
+    # CHANGE - 20200412 ==================================================================================
+    g['CTL_TBL'] = g['CONFIG']['CTL_TBL']
     # CHANGE =============================================================================================
     g['MSMT_DTE_ID'] = time.strftime('%Y%m%d') 
     g['STARTED_AT'] = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -109,38 +111,81 @@ def scrape():
     # - this should be the primary section of code that changes  
     # - only other sections that "may" change are DELETE and UPDATE DB statements
     # ==========================================================================================================================================================
-    # PASS 1 - INDUSTRY COUNT =====================================================================
-    for row in soup.find_all('tr'):
-        cell_chk = None        
-        for cell in row.find_all('td'):            
-            a = cell.text.replace("(",'').replace(")",'')
-            a = a.upper()
-            if a.isdigit():
-                facet_count = int(a)
-            else:
-                facet_desc = a
-            
-            cell_chk = cell
-        
-        if cell_chk:
-            facet_type = 'INDUSTRY'
-            # =============================================================================
-            # WRITE RESULTS OF SOUP ANALYISIS/SCRAPE TO LOCAL DB
-            # =============================================================================   
-            dbmgr = pyDB(g['DB'])
-            q = r"""INSERT INTO {0} (MSMT_DTE_ID, DATA_TYPE, CNTRY_CDE, SITE_CDE, FACET_TYPE, FACET_DESC, FACET_CNT, STARTED_AT, FINISHED_AT) VALUES ({1}, '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}')""".format(
-                g['TBL_NME'], #[0]
-                g['MSMT_DTE_ID'], #[1]
-                g['DATA_TYPE'], #[2]
-                g['CNTRY_CDE'], #[3]
-                g['SITE_CDE'], #[4]
-                facet_type, #[5]
-                facet_desc, #[6]
-                facet_count, #[7]
-                g['STARTED_AT'], #[8]
-                '' #[9]
-                )
-            dbmgr.query(q)
+    
+    #PASS 0 - TOTAL JOB COUNT
+    
+    facet_type = 'TOTAL'
+    facet_desc = 'ALL JOBS'
+
+    for h1 in soup.find_all('h1', class_='heading-large'):
+        txt1 = h1.text.upper().replace(",",'').strip()
+        txt2 = re.findall(r'\d+',txt1)
+        facet_count = txt2[0]
+
+        # =============================================================================
+        # WRITE RESULTS OF SOUP ANALYISIS/SCRAPE TO LOCAL DB
+        # =============================================================================   
+        dbmgr = pyDB(g['DB'])
+        q = r"""INSERT INTO {0} (MSMT_DTE_ID, DATA_TYPE, CNTRY_CDE, SITE_CDE, FACET_TYPE, FACET_DESC, FACET_CNT, STARTED_AT, FINISHED_AT) VALUES ({1}, '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}')""".format(
+            g['TBL_NME'], #[0]
+            g['MSMT_DTE_ID'], #[1]
+            g['DATA_TYPE'], #[2]
+            g['CNTRY_CDE'], #[3]
+            g['SITE_CDE'], #[4]
+            facet_type, #[5]
+            facet_desc, #[6]
+            facet_count, #[7]
+            g['STARTED_AT'], #[8]
+            '' #[9]
+            )
+        dbmgr.query(q)
+
+    # PASS 1 - ALL ELSE ===================================================================
+    for div in soup.find_all('div', class_='column-quarter column-filters'):
+        for li in div.find_all('li'):
+            for a in li.find_all('a', href=True):
+                href = a['href'].upper()
+
+                res = any(ele in href for ele in ['SEARCH?LOC','SEARCH?CAT','SEARCH?CTY','SEARCH?CTI'])
+
+                if res:
+                    #print(str(res))
+                    if 'SEARCH?LOC' in href:
+                        facet_type = 'REGION'
+                    elif 'SEARCH?CAT' in href:
+                        facet_type = 'INDUSTRY'
+                    elif 'SEARCH?CTY' in href:
+                        facet_type = 'JOB TYPE'
+                    elif 'SEARCH?CTI' in href:
+                        facet_type = 'HOURS'
+                    else:
+                        facet_type = 'NOT SPECIFIED'
+
+                    facet_desc = a.text.upper()
+
+                    for span in li.find_all('span'):
+                        txt1 = span.text.replace(',','')
+                        txt2 = re.findall(r'\d+',txt1)
+                        facet_count = txt2[0]
+
+                    # =============================================================================
+                    # WRITE RESULTS OF SOUP ANALYISIS/SCRAPE TO LOCAL DB
+                    # =============================================================================   
+                    dbmgr = pyDB(g['DB'])
+                    q = r"""INSERT INTO {0} (MSMT_DTE_ID, DATA_TYPE, CNTRY_CDE, SITE_CDE, FACET_TYPE, FACET_DESC, FACET_CNT, STARTED_AT, FINISHED_AT) VALUES ({1}, '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}')""".format(
+                        g['TBL_NME'], #[0]
+                        g['MSMT_DTE_ID'], #[1]
+                        g['DATA_TYPE'], #[2]
+                        g['CNTRY_CDE'], #[3]
+                        g['SITE_CDE'], #[4]
+                        facet_type, #[5]
+                        facet_desc, #[6]
+                        facet_count, #[7]
+                        g['STARTED_AT'], #[8]
+                        '' #[9]
+                        )
+                    dbmgr.query(q)
+
     # =============================================================================
     # WRITE HTML PAGE TO FILE
     # =============================================================================
@@ -149,55 +194,7 @@ def scrape():
         with open(g['CONFIG']['DB_DIR'] + '__html\\' + file_name,'w+', encoding='utf-8') as f:  
             f.writelines(str(soup)) 
         f.close()
-    # PASS 2 - REGION COUNT =====================================================================
-    # =============================================================================
-    # PASS URL TO RETURN HTML FROM SITE PAGE
-    # CAPTURE ANY ERRORS EXPERIENCED AND PASS TO LOCAL DB
-    # =============================================================================
-    url = g['URL'] + g['URL_PART2']
-    passedHTML = pyHTMLPass.htmlPass(url,**g)
-    soup = BeautifulSoup(passedHTML, "html.parser")
-    #soup = soup.encode('utf-8')
-    #print(soup)    
-    for row in soup.find_all('tr'):
-        cell_chk = None        
-        for cell in row.find_all('td'):            
-            a = cell.text.replace("(",'').replace(")",'')
-            a = a.upper()
-            if a.isdigit():
-                facet_count = int(a)
-            else:
-                facet_desc = a
-            
-            cell_chk = cell
-        
-        if cell_chk:
-            facet_type = 'REGION'
-            # =============================================================================
-            # WRITE RESULTS OF SOUP ANALYISIS/SCRAPE TO LOCAL DB
-            # =============================================================================   
-            dbmgr = pyDB(g['DB'])
-            q = r"""INSERT INTO {0} (MSMT_DTE_ID, DATA_TYPE, CNTRY_CDE, SITE_CDE, FACET_TYPE, FACET_DESC, FACET_CNT, STARTED_AT, FINISHED_AT) VALUES ({1}, '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}')""".format(
-                g['TBL_NME'], #[0]
-                g['MSMT_DTE_ID'], #[1]
-                g['DATA_TYPE'], #[2]
-                g['CNTRY_CDE'], #[3]
-                g['SITE_CDE'], #[4]
-                facet_type, #[5]
-                facet_desc, #[6]
-                facet_count, #[7]
-                g['STARTED_AT'], #[8]
-                '' #[9]
-                )
-            dbmgr.query(q)
-    # =============================================================================
-    # WRITE HTML PAGE TO FILE
-    # =============================================================================
-    if g['WRITE_HTML_TO_FILE'] == 'Y':
-        file_name = g['MSMT_DTE_ID'] + '_' + g['CNTRY_CDE'] + '_' + g['SITE_CDE'] + '_' + facet_type.replace(' ','_') + '_' + 'SITE_LISTING' + '.html'
-        with open(g['CONFIG']['DB_DIR'] + '__html\\' + file_name,'w+', encoding='utf-8') as f:  
-            f.writelines(str(soup)) 
-        f.close()
+ 
     # ==========================================================================================================================================================
     # SCRAPE PART - END
     # - this should be the primary section of code that changes  

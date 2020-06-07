@@ -1,7 +1,7 @@
 rem ===========================================================================================================================================================
 rem SUBJECT		 : generic batch call to python - webscrape batch call
 rem OBJECT TYPE	 : batch
-rem OBJECT NAME  : PYTHON_JS_WEBSCRAPE.bat
+rem OBJECT NAME  : 06_PY_UK.bat
 rem CREATED BY	 : Harold Delaney
 rem CREATED ON	 : 20170212
 rem SOURCE		 : 
@@ -16,29 +16,14 @@ rem ============================================================================
 @echo off
 
 set pythonPath=%USERPROFILE%\Anaconda3\envs\lanoitan\python.exe
-set scritpPath=D:\Sync\__lanoitan\__scripts\__python\jobs\
+set scriptPath=D:\Sync\__rodinaFre\.fx.jobmarkets.predictor\__python\jobs\
 
 rem ===========================================================================================================================================================
 rem JOBS - UK
 rem ===========================================================================================================================================================
 
-rem %pythonPath% %scritpPath%PY_BATCH_JOBS_UK.py %*
+%pythonPath% %scriptPath%PY_BATCH_JOBS_UK.py %*
 
-rem TIMEOUT 30
+TIMEOUT 10
 
-rem ===========================================================================================================================================================
-rem JOBS - CA
-rem ===========================================================================================================================================================
-
-rem %pythonPath% %scritpPath%PY_BATCH_JOBS_CA.py %*
-
-rem TIMEOUT 30
-
-rem ===========================================================================================================================================================
-rem JOBS - US
-rem ===========================================================================================================================================================
-
-rem %pythonPath% %scritpPath%PY_BATCH_JOBS_US.py %*
-
-rem pause
 exit

@@ -44,7 +44,7 @@ __author__ = "Harold Delaney"
 
 g = dict(
     CONFIG_FILE = utilPath + '\PY_DB.conf',
-    VARS_TABLE_NAME = 'PY_VARS_CTL',
+    #VARS_TABLE_NAME = 'PY_VARS_CTL',
     PKG_NME = fileName.replace('.py','').upper()
 )
 
@@ -61,6 +61,8 @@ def init():
     # CHANGE - 20171128 ==================================================================================
     g['DB'] = g['CONFIG']['DB_DIR'] + g['CONFIG']['DB']    #dbPath + '\\' + g['CONFIG']['DB']
     g['DRVR_PATH'] = g['CONFIG']['DRVR_DIR']    #drvrPath
+    # CHANGE - 20200412 ==================================================================================
+    g['CTL_TBL'] = g['CONFIG']['CTL_TBL']
     # CHANGE =============================================================================================
     g['MSMT_DTE_ID'] = time.strftime('%Y%m%d') 
     g['STARTED_AT'] = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -123,7 +125,10 @@ def scrape():
             passedHTML = pyHTMLPass.htmlPass(url,**g)
             soup = BeautifulSoup(passedHTML, "html.parser")
             #print(str(soup).encode("utf-8","ignore").decode('ascii', 'ignore'))  
-            for span in soup.find_all('span', class_='posting-total'):
+            for span in soup.find_all('span', class_='CategoryPath-total'):
+                for h1 in span.find_all('h1'):
+                    h1 = h1.upper()
+
                 #print(span.text)                
                 #nbr = re.search('Showing 1-\d* of (.*?)</div>', str(div)).group(1)
                 nbr = span.text

@@ -44,7 +44,7 @@ __author__ = "Harold Delaney"
 
 g = dict(
     CONFIG_FILE=utilPath + '\PY_DB.conf',
-    VARS_TABLE_NAME='PY_VARS_CTL',
+    #VARS_TABLE_NAME='PY_VARS_CTL',
     PKG_NME=fileName.replace('.py', '').upper()
 )
 
@@ -63,6 +63,8 @@ def init():
     # CHANGE - 20171128 ==================================================================================
     g['DB'] = g['CONFIG']['DB_DIR'] + g['CONFIG']['DB']    #dbPath + '\\' + g['CONFIG']['DB']
     g['DRVR_PATH'] = g['CONFIG']['DRVR_DIR']    #drvrPath
+    # CHANGE - 20200412 ==================================================================================
+    g['CTL_TBL'] = g['CONFIG']['CTL_TBL']
     # CHANGE =============================================================================================
     g['MSMT_DTE_ID'] = time.strftime('%Y%m%d') 
     g['STARTED_AT'] = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -179,7 +181,9 @@ def scrape():
                 
                 # FACET DESCRIPTION ===========================================================
                 facet_desc = re.findall(' FOUND(.*)', str(txt))
-                facet_desc = str(facet_desc[0]).strip()
+                facet_desc = cleanhtml(facet_desc[0])
+
+                #facet_desc = str(facet_desc[0]).strip()
                 # print(facet_desc)
                 
                 # FACET COUNT =================================================================
@@ -245,5 +249,10 @@ def write_log():
     dbmgr = pyDB(g['DB'])
     dbmgr.write_log(finished_at, None, **g)
 
+def cleanhtml(raw_html):
+    cleanr = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+    cleantext = re.sub(cleanr, '', raw_html)
+    cleantext = cleantext.strip()
+    return cleantext
        
 if __name__ == "__main__": main()

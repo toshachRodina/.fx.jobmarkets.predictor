@@ -44,7 +44,7 @@ __author__ = "Harold Delaney"
 
 g = dict(
     CONFIG_FILE = utilPath + '\PY_DB.conf',
-    VARS_TABLE_NAME = 'PY_VARS_CTL',
+    #VARS_TABLE_NAME = 'PY_VARS_CTL',
     PKG_NME = fileName.replace('.py','').upper()
 )
 
@@ -61,6 +61,8 @@ def init():
     # CHANGE - 20171128 ==================================================================================
     g['DB'] = g['CONFIG']['DB_DIR'] + g['CONFIG']['DB']    #dbPath + '\\' + g['CONFIG']['DB']
     g['DRVR_PATH'] = g['CONFIG']['DRVR_DIR']    #drvrPath
+    # CHANGE - 20200412 ==================================================================================
+    g['CTL_TBL'] = g['CONFIG']['CTL_TBL']
     # CHANGE =============================================================================================
     g['MSMT_DTE_ID'] = time.strftime('%Y%m%d') 
     g['STARTED_AT'] = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -128,10 +130,10 @@ def scrape():
             industryLinksList.append(link)
             #print(industryLinksList)
             
-    for ul in soup.find_all('ul', class_='studentsList'):
-        for links in ul.find_all('a'):
-            link = str(links.get('href')) 
-            jobtypeLinksList.append(link)       
+    #for ul in soup.find_all('ul', class_='studentsList'):
+    #    for links in ul.find_all('a'):
+    #        link = str(links.get('href')) 
+    #        jobtypeLinksList.append(link)       
     
     # PASS 2 - COLLECT REGION DATA ====================================================
     facet_type = 'REGION'
@@ -161,9 +163,9 @@ def scrape():
                 passedHTML = pyHTMLPass.htmlPass(url,**g)
                 soup = BeautifulSoup(passedHTML, "html.parser")
         
-                for div in soup.find_all('div', class_='sr-result-count'):  #result-count
-                    for strong in div.find_all('strong'):
-                        facet_count = re.search(r' of(.*?)</strong>',str(strong)).group(1)
+                for div in soup.find_all('div', class_='ResultText'):  #result-count
+                    for span in div.find_all('span', class_='ResultText-numTotal'):
+                        facet_count = span.text   #re.search(r' of(.*?)</strong>',str(strong)).group(1)
                             
                         #facet_count = strong.text.upper()
                         #facet_count = facet_count.split('OF',1)[1]
@@ -222,11 +224,9 @@ def scrape():
                 passedHTML = pyHTMLPass.htmlPass(url,**g)
                 soup = BeautifulSoup(passedHTML, "html.parser")
         
-                for div in soup.find_all('div', class_='sr-result-count'):
-                    for strong in div.find_all('strong'):
-                        facet_count = re.search(r' of(.*?)</strong>',str(strong)).group(1)
-                        #facet_count = strong.text.upper()
-                        #facet_count = facet_count.split('OF',1)[1]
+                for div in soup.find_all('div', class_='ResultText'):
+                    for span in div.find_all('span', class_='ResultText-numTotal'):
+                        facet_count = span.text   #re.search(r' of(.*?)</strong>',str(strong)).group(1)
                         facet_count = facet_count.strip()
                 
                 # =============================================================================

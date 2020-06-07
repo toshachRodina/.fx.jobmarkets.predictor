@@ -44,7 +44,7 @@ __author__ = "Harold Delaney"
 
 g = dict(
     CONFIG_FILE = utilPath + '\PY_DB.conf',
-    VARS_TABLE_NAME = 'PY_VARS_CTL',
+    #VARS_TABLE_NAME = 'PY_VARS_CTL',
     PKG_NME = fileName.replace('.py','').upper()
 )
 
@@ -61,6 +61,8 @@ def init():
     # CHANGE - 20171128 ==================================================================================
     g['DB'] = g['CONFIG']['DB_DIR'] + g['CONFIG']['DB']    #dbPath + '\\' + g['CONFIG']['DB']
     g['DRVR_PATH'] = g['CONFIG']['DRVR_DIR']    #drvrPath
+    # CHANGE - 20200412 ==================================================================================
+    g['CTL_TBL'] = g['CONFIG']['CTL_TBL']
     # CHANGE =============================================================================================
     g['MSMT_DTE_ID'] = time.strftime('%Y%m%d') 
     g['STARTED_AT'] = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -112,10 +114,15 @@ def scrape():
     # PASS 1 - TOTAL COUNT ========================================================================
     facet_type = 'TOTAL'
     facet_desc = 'ALL JOBS'
-    for div in soup('div', class_="page-h1-title"):
+    
+    for div in soup.find_all('div',class_='col-sm-11 col-xs-12 page-title'):
+        
+        divtext = str(div)
         for span in div.find_all('span'):
-            ttl = re.search(r'\d+', str(span).replace(',','')).group()
-            facet_count = int(ttl)
+            txt1 = span.text.replace(',','')
+            txt2 = re.findall(r'\d+',txt1)
+            facet_count = txt2[0]
+            
             # =============================================================================
             # WRITE RESULTS OF SOUP ANALYISIS/SCRAPE TO LOCAL DB
             # =============================================================================   
@@ -133,31 +140,33 @@ def scrape():
                 '' #[9]
                 )
             dbmgr.query(q) 
+    
     # PASS 2 - INDUSTRY, JOB TYPE & RECRUITER COUNT ===============================================
-    for ul in soup.find_all('ul', class_="facets"):
-        for li in ul.find_all('li'):            
-            for a in li.find_all('a'):
-                li_txt = a.text  #re.search('\">(.*?)</a>', str(li)).group(1)
-                facet_desc = li_txt.replace(',','').upper()            
-            try:
+    for div in soup.find_all('div', class_='form-container'):
+        for li in div.find_all('li'):
+
+            litext = str(li).upper()
+
+            res = any(ele in litext for ele in ['WORKTYPES','SETPARENTSECTOR','RECRUITERTYPEFACETS'])
+            if res:
+                #print(str(res))
+                if 'WORKTYPES' in litext:
+                    facet_type = 'JOB TYPE'
+                elif 'SETPARENTSECTOR' in litext:
+                    facet_type = 'INDUSTRY'
+                elif 'RECRUITERTYPEFACETS' in litext:
+                    facet_type = 'POSTED'
+                else:
+                    facet_type = 'NOT SPECIFIED'
+
+                for a in li.find_all('a', href=True):
+                    facet_desc = a.text.upper()
+
                 for span in li.find_all('span'):
-                    li_nbr = span.text #re.search('\">(.*?)</span>', str(li)).group(1)
-                    facet_count = int(li_nbr.replace('(','').replace(')','').replace(',',''))
-            except:
-                facet_count = None
-        
-            if 'SECTORNAME' in str(li).upper():
-                facet_type = 'INDUSTRY'
-            elif 'WORKTYPES' in str(li).upper():
-                facet_type = 'JOB TYPE'
-            elif 'RECRUITERTYPE' in str(li).upper():
-                facet_type = 'RECRUITER'
-            else:
-                facet_type = 'NOT FOUND'
-                
-            if facet_type == 'NOT FOUND':
-                None
-            else:
+                    txt1 = span.text.replace(',','')
+                    txt2 = re.findall(r'\d+',txt1)
+                    facet_count = txt2[0]
+
                 # =============================================================================
                 # WRITE RESULTS OF SOUP ANALYISIS/SCRAPE TO LOCAL DB
                 # =============================================================================   

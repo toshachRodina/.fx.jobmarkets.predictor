@@ -47,7 +47,7 @@ __author__ = "Harold Delaney"
 
 g = dict(
     CONFIG_FILE = utilPath + '\PY_DB.conf',
-    VARS_TABLE_NAME = 'PY_VARS_CTL',
+    #VARS_TABLE_NAME = 'PY_VARS_CTL',
     PKG_NME = fileName.replace('.py','').upper()
 )
 
@@ -64,6 +64,8 @@ def init():
     # CHANGE - 20171128 ==================================================================================
     g['DB'] = g['CONFIG']['DB_DIR'] + g['CONFIG']['DB']    #dbPath + '\\' + g['CONFIG']['DB']
     g['DRVR_PATH'] = g['CONFIG']['DRVR_DIR']    #drvrPath
+    # CHANGE - 20200412 ==================================================================================
+    g['CTL_TBL'] = g['CONFIG']['CTL_TBL']
     # CHANGE =============================================================================================
     g['MSMT_DTE_ID'] = time.strftime('%Y%m%d') 
     g['STARTED_AT'] = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -167,26 +169,6 @@ def scrape():
                 f.writelines(str(soup)) 
             f.close()
             
-            
-#             for href in soup.find_all('a'):
-#                 full_ref = str(href)
-#                 link_txt = str(href.get('href'))
-#                 if 'VIEW ALL' in str(href).upper():
-#                     full_ref = str(href)
-#                     link_txt = str(href.get('href'))
-#                     # =============================================================================
-#                     # PASS URL TO RETURN HTML FROM SITE PAGE
-#                     # CAPTURE ANY ERRORS EXPERIENCED AND PASS TO LOCAL DB
-#                     # =============================================================================            
-#                     url = link_txt
-#                     passedHTML = pyHTMLPass.htmlPass(url,**g)
-#                     soup = BeautifulSoup(passedHTML, "html.parser")
-#                     #print(soup)                    
-#                     for span in soup.find_all('span', class_='c'):
-#                         facet_count = str(span.text)
-#                         facet_count = int(facet_count.replace(',',''))                    
-                    
-                        
     # PASS 2 - REGIONAL DETAILS ===================================================================  
     facet_type = 'REGION'
     regions = g['REGIONS']

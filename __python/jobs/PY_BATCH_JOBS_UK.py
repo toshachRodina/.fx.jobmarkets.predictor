@@ -43,7 +43,7 @@ __author__ = "Harold Delaney"
 
 g = dict(
     CONFIG_FILE = utilPath + '\PY_DB.conf',
-    VARS_TABLE_NAME = 'PY_VARS_CTL',
+    #VARS_TABLE_NAME = 'PY_VARS_CTL',
     PKG_NME = fileName.replace('.py','').upper()
 )
 
@@ -64,6 +64,8 @@ def init():
     # CHANGE - 20171128 ==================================================================================
     g['DB'] = g['CONFIG']['DB_DIR'] + g['CONFIG']['DB']    #dbPath + '\\' + g['CONFIG']['DB']
     g['DRVR_PATH'] = g['CONFIG']['DRVR_DIR']    #drvrPath
+    # CHANGE - 20200412 ==================================================================================
+    g['CTL_TBL'] = g['CONFIG']['CTL_TBL']
     # CHANGE =============================================================================================
     g['MSMT_DTE_ID'] = time.strftime('%Y%m%d') 
     g['STARTED_AT'] = time.strftime("%Y-%m-%d %H:%M:%S") 
@@ -114,7 +116,7 @@ def email_status(step):
         # =============================================================================   
         dbmgr = pyDB(g['DB'])
         q = r"""SELECT msmt_dte_id, cntry_cde, count( * ) AS row_cnt, sum(facet_cnt) as job_count FROM {0} WHERE cntry_cde = 'UK' GROUP BY msmt_dte_id, cntry_cde ORDER BY msmt_dte_id DESC LIMIT 5""".format(
-            'PY_JOBADS_JOBS_DATA'
+            'WEBDATA_JOBADS'
             ) 
         rslt = dbmgr.query(q)
         # =============================================================================
@@ -181,7 +183,7 @@ def email_status(step):
                                 else 0
                             end as INTEGER) as PREV_FACET_CNT
                         from
-                            PY_JOBADS_JOBS_DATA
+                            WEBDATA_JOBADS
                         where
                             1 = 1
                             and cntry_cde = 'UK'
@@ -204,7 +206,7 @@ def email_status(step):
                 order by
                     1,
                     3""".format(
-            'PY_JOBS_DATA'
+            'WEBDATA_JOBADS'
             ) 
         rslt = dbmgr.query(q)
         # =============================================================================

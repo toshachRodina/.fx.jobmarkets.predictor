@@ -44,7 +44,7 @@ __author__ = "Harold Delaney"
 
 g = dict(
     CONFIG_FILE = utilPath + '\PY_DB.conf',
-    VARS_TABLE_NAME = 'PY_VARS_CTL',
+    #VARS_TABLE_NAME = 'PY_VARS_CTL',
     PKG_NME = fileName.replace('.py','').upper()
 )
 
@@ -61,6 +61,8 @@ def init():
     # CHANGE - 20171128 ==================================================================================
     g['DB'] = g['CONFIG']['DB_DIR'] + g['CONFIG']['DB']    #dbPath + '\\' + g['CONFIG']['DB']
     g['DRVR_PATH'] = g['CONFIG']['DRVR_DIR']    #drvrPath
+    # CHANGE - 20200412 ==================================================================================
+    g['CTL_TBL'] = g['CONFIG']['CTL_TBL']
     # CHANGE =============================================================================================
     g['MSMT_DTE_ID'] = time.strftime('%Y%m%d') 
     g['STARTED_AT'] = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -108,33 +110,27 @@ def scrape():
     # - this should be the primary section of code that changes  
     # - only other sections that "may" change are DELETE and UPDATE DB statements
     # ==========================================================================================================================================================
-    # PASS 1 - REGION COUNT =======================================================================
-    dictCat = {}
-    for div in soup.find_all('div', class_='form-item form-item-sectors'):
-        for label in div.find_all('label'):
-            category = str(label.text).strip().upper()
-            value = re.findall(r'VALUE="(.+?)"/>', str(label).upper()) # find any within brackets
-            value = str(value[0]).upper()
-            # ADD TO dictCat
-            dictCat[category] = value
-            #print (dictCat)
     
-    # ITERATE THROUGH dictCat DICTIONARY
-    for k, v in dictCat.items():
-        time.sleep(rndm_sleep) # INSERTS PAUSE TO ASSIST REFLECTING HUMAN INTERACTION ON WEBPAGE
-        #print(k, v)
-        facet_type = 'INDUSTRY'
-        facet_desc = k.replace('&AMP;', '&') 
-        # =============================================================================
-        # PASS URL TO RETURN HTML FROM SITE PAGE
-        # CAPTURE ANY ERRORS EXPERIENCED AND PASS TO LOCAL DB
-        # =============================================================================
-        url = g['URL_SEARCH'] + v
-        passedHTML = pyHTMLPass.htmlPass(url,**g)
-        soup = BeautifulSoup(passedHTML, "html.parser")
-        #print(str(soup).encode('ascii', 'ignore'))  
-        for h1 in soup.find_all('h1',class_='search_result_title'):
-            facet_count = str(h1.text).upper().replace('JOBS','').strip()
+    # PASS 0 -  TOTAL COUNT =======================================================================
+    facet_type = 'TOTAL JOBS'
+    
+    for div in soup.find_all('div', class_='counter'):
+        i = 0        
+        for span in div.find_all('span'):
+            
+            if i == 0:
+                facet_desc = 'ALL JOBS'
+            elif i == 1:
+                facet_desc = 'ALL COMPANIES'
+            else:
+                facet_desc = 'NOT CATEGORISED'
+            
+            spanval = div.findAll('span')[i]
+            
+            txt1 = spanval.text.replace(',','')
+            txt2 = re.findall(r'\d+',txt1)
+            facet_count = txt2[0]
+
             # =============================================================================
             # WRITE RESULTS OF SOUP ANALYISIS/SCRAPE TO LOCAL DB
             # =============================================================================   
@@ -152,14 +148,82 @@ def scrape():
                 '' #[9]
                 )
             dbmgr.query(q)
-            # =============================================================================
-            # WRITE HTML PAGE TO FILE
-            # =============================================================================
-            if g['WRITE_HTML_TO_FILE'] == 'Y':
-                file_name = g['MSMT_DTE_ID'] + '_' + g['CNTRY_CDE'] + '_' + g['SITE_CDE'] + '_' + facet_type.replace(' ','_') + '_' + facet_desc.replace(' ','_') + '.html'
-                with open(g['CONFIG']['DB_DIR'] + '__html\\' + file_name,'w+', encoding='utf-8') as f:  
-                    f.writelines(str(soup)) 
-                f.close()
+
+            i = i + 1
+        
+    # PASS 1 -  REGION COUNT ======================================================================
+    for div in soup.find_all('div',id='locationTabContent'): # LOCATION/REGION
+        facet_type = 'REGION'
+        
+        for li in div.find_all('li'):
+            for a in li.find_all('a', class_='region', href=True):
+
+                facet_desc = a.text.upper().replace('JOBS IN','').strip()
+
+                for span in li.find_all('span'):
+                    txt1 = span.text.replace(',','')
+                    txt2 = re.findall(r'\d+',txt1)
+                    facet_count = txt2[0]
+
+                # =============================================================================
+                # WRITE RESULTS OF SOUP ANALYISIS/SCRAPE TO LOCAL DB
+                # =============================================================================   
+                dbmgr = pyDB(g['DB'])
+                q = r"""INSERT INTO {0} (MSMT_DTE_ID, DATA_TYPE, CNTRY_CDE, SITE_CDE, FACET_TYPE, FACET_DESC, FACET_CNT, STARTED_AT, FINISHED_AT) VALUES ({1}, '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}')""".format(
+                    g['TBL_NME'], #[0]
+                    g['MSMT_DTE_ID'], #[1]
+                    g['DATA_TYPE'], #[2]
+                    g['CNTRY_CDE'], #[3]
+                    g['SITE_CDE'], #[4]
+                    facet_type, #[5]
+                    facet_desc, #[6]
+                    facet_count, #[7]
+                    g['STARTED_AT'], #[8]
+                    '' #[9]
+                    )
+                dbmgr.query(q)
+
+    # PASS 2 -  INDUSTRY COUNT ====================================================================
+    for div in soup.find_all('div',id='sectorTabContent'): # LOCATION/REGION
+        facet_type = 'INDUSTRY'
+        
+        for li in div.find_all('li'):
+            for a in li.find_all('a', href=True):
+
+                facet_desc = a.text.upper().strip()
+
+                for span in li.find_all('span'):
+                    txt1 = span.text.replace(',','')
+                    txt2 = re.findall(r'\d+',txt1)
+                    facet_count = txt2[0]
+
+                # =============================================================================
+                # WRITE RESULTS OF SOUP ANALYISIS/SCRAPE TO LOCAL DB
+                # =============================================================================   
+                dbmgr = pyDB(g['DB'])
+                q = r"""INSERT INTO {0} (MSMT_DTE_ID, DATA_TYPE, CNTRY_CDE, SITE_CDE, FACET_TYPE, FACET_DESC, FACET_CNT, STARTED_AT, FINISHED_AT) VALUES ({1}, '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}')""".format(
+                    g['TBL_NME'], #[0]
+                    g['MSMT_DTE_ID'], #[1]
+                    g['DATA_TYPE'], #[2]
+                    g['CNTRY_CDE'], #[3]
+                    g['SITE_CDE'], #[4]
+                    facet_type, #[5]
+                    facet_desc, #[6]
+                    facet_count, #[7]
+                    g['STARTED_AT'], #[8]
+                    '' #[9]
+                    )
+                dbmgr.query(q)
+
+                
+    # =============================================================================
+    # WRITE HTML PAGE TO FILE
+    # =============================================================================
+    if g['WRITE_HTML_TO_FILE'] == 'Y':
+        file_name = g['MSMT_DTE_ID'] + '_' + g['CNTRY_CDE'] + '_' + g['SITE_CDE'] + '_' + facet_type.replace(' ','_') + '_' + facet_desc.replace(' ','_') + '.html'
+        with open(g['CONFIG']['DB_DIR'] + '__html\\' + file_name,'w+', encoding='utf-8') as f:  
+            f.writelines(str(soup)) 
+        f.close()
     # ==========================================================================================================================================================
     # SCRAPE PART - END
     # - this should be the primary section of code that changes  
